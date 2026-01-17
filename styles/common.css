@@ -1,0 +1,56 @@
+body{
+    background-color: var(--background);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--textPrimary);
+}
+
+p, a, li, span, div {
+    color: var(--textSecondary);
+}
+
+nav{
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: var(--backgroundSecondary);
+    border-radius: 8px;
+    align-items: stretch;
+}
+
+nav a:last-child {
+    margin-left: auto;
+}
+
+nav a{
+    text-decoration: none;
+    font-size: 24px;
+    padding-top: auto;
+    padding-bottom: auto;
+
+}
+
+nav a:hover{
+    color: var(--accentHover);
+}
+
+nav a:active{
+    color: var(--accentActive);
+}
+
+#logout-button {
+    font-size: 24px;
+    padding-top: auto;
+    padding-bottom: auto;
+    color: var(--textSecondary);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+#logout-button:hover {
+    color: var(--accentHover);
+
+}

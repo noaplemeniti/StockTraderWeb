@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="../styles/common.css">
+        <link rel="stylesheet" href="../styles/explore.css">
+        <script src="../scripts/theme.js" defer></script>
+        <script src="../scripts/explore.js" defer></script>
+    </head>
+    <body>
+        <nav>
+            <a href="dashboard.html">Home</a> |
+            <a href="explore.html">Explore</a> |
+            <a href="profile.html">Profile</a> |
+            <a href="settings.html">Settings</a> |
+            <form action="/api/logout" method="post" style="display: inline;">
+                <button type="submit" id="logout-button">Logout</button>
+            </form>
+        </nav>
+        <h1>Explore</h1>
+
+        <div class="toolbar">
+            <input type="text" id="searchInput" placeholder="Search stocks...">
+            <button id="searchButton">Search</button>
+        </div>
+
+        <div class="card">
+            <table id="stocksTable">
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+        <div id="buyModal" class="modalOverlay hidden">
+            <div class="modalContent">
+                <h2>Buy Stock</h2>
+                
+                <div class="row">
+                    <strong id="stockSymbol">-</strong>
+                    <strong id="stockPrice">-</strong>
+                </div>
+
+                <div class="row">
+                    <p id="userBalance">
+                        Your Balance: $<span id="balanceAmount">0.00</span>
+                    </p>
+                </div>
+
+                <div class="row">
+                    <label for="quantityInput">Quantity:</label>
+                    <input type="number" id="quantityInput" min="0" value="0">
+                </div>
+
+                <div class="row">
+                    <strong>Total Cost: $<span id="totalCost">0.00</span></strong>
+                </div>
+                
+                <p id="buyError" class="hidden"></p>
+
+                <div class="row">
+                     <button id="cancelBuy" type="button">Cancel</button>
+                    <button id="confirmBuy" type="button">Buy</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

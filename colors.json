@@ -1,0 +1,26 @@
+{
+  "dark": {
+    "background": "#000000",
+    "backgroundSecondary": "#0d0d0d",
+    "textPrimary": "#ffffff",
+    "textSecondary": "#cccccc",
+    "accent": "#224722",
+    "accentHover": "#1F3D1F",
+    "accentBorder": "#112411",
+    "error": "#ff4444",
+    "success": "#00ff66",
+    "cardBackground": "#111111"
+  },
+  "light": {
+    "background": "#ffffff",
+    "backgroundSecondary": "#f5f5f5",
+    "textPrimary": "#000000",
+    "textSecondary": "#333333",
+    "accent": "#007bff",
+    "accentHover": "#005fcc",
+    "accentBorder": "#003f99",
+    "error": "#d00000",
+    "success": "#00bb44",
+    "cardBackground": "#ffffff"
+  }
+}
