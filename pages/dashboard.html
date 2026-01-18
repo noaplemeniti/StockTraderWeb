@@ -7,8 +7,10 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../styles/common.css">
+        <link rel="stylesheet" href="../styles/dashboard.css">
         <script src="../scripts/theme.js" defer></script>
         <script src="../scripts/stockloader.js" defer></script>
+        <script src="../scripts/dashboard.js" defer></script>
     </head>
     <body>
         <nav>
@@ -21,10 +23,54 @@
             </form>
         </nav>
         <h1>My Portfolio</h1>
-        <h2 id="portfolio-value">Value:</h2>
-        <p id="portfolio-value-display"></p>
-        <ul>
-            <li>!TODO: Implement listing user stocks.</li>
-        </ul>
+        <h2 id="balance">Balance: $<span id="user-balance-display">-</span></h2>
+        <h2 id="portfolio-value">Value: $<span id="portfolio-value-display">-</span></h2>
+        <h2 id="profit-loss">Profit/Loss: $<span id="profit-loss-display">-</span></h2>
+        <div class="card">
+            <table id="stocksTable">
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Quantity</th>
+                        <th>Average Price</th>
+                        <th>Current Price</th>
+                        <th>Profit/Loss</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <div class="modalOverlay hidden" id="sellModal">
+            <div class="modalContent">
+                <h2>Stock Details</h2>
+                <div id="stockDetailsContent">
+                    <div class="row">
+                        <strong id="detailStockSymbol">-</strong>
+                        <strong id="detailStockPrice">-</strong>
+                    </div>
+                    <div class="row">
+                        <p>Your balance: $<span id="balance-modal">-</span></p>
+                        <p>Owned Quantity: <span id="quantity-owned-modal">0</span></p>
+                        <p>Average Price: $<span id="average-price-modal">0.00</span></p>
+                        <p>Current Price: $<span id="current-price-modal">0.00</span></p>
+                        <p>Profit/Loss: $<span id="profit-loss-modal">0.00</span></p>
+                    </div>
+                    <div class="row">
+                        <input type="number" id="quantity-input-modal" placeholder="Quantity to sell" min="1">
+                    </div>
+                    <div class="row">
+                        <p id="error-modal" class="hidden">
+                        </p>
+                    </div>
+                    <div class="row">
+                        <button id="close-modal">Close</button>
+                        <button id="sell-stock-modal">Sell</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

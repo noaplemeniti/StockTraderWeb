@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const tableBody = document.querySelector("#stocksTable tbody");
   const searchInput = document.getElementById("searchInput");
-  const searchButton = document.getElementById("searchButton");
 
   const cancelBuyBtn = document.getElementById("cancelBuy");
   const buyModalElement = document.getElementById("buyModal");
@@ -13,11 +12,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const buyErrorElement = document.getElementById("buyError");
   const confirmBuyBtn = document.getElementById("confirmBuy");
 
+  if(!tableBody) console.error("Table body not found");
+  if(!cancelBuyBtn) console.error("Cancel buy button not found");
+  if(!buyModalElement) console.error("Buy modal element not found");
+  if(!stockSymbolElement) console.error("Stock symbol element not found");
+  if(!stockPriceElement) console.error("Stock price element not found");
+  if(!quantityInput) console.error("Quantity input not found");
+  if(!balanceAmountElement) console.error("Balance amount element not found");
+  if(!totalCostElement) console.error("Total cost element not found");
+  if(!buyErrorElement) console.error("Buy error element not found");
+  if(!confirmBuyBtn) console.error("Confirm buy button not found");
+
   let allStocks = [];
   let filteredStocks = [];
   
   let modalState = {
     stockId: null,
+    stockSymbol: null,
     price: 0,
     balance: 0
   };
@@ -79,12 +90,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-    async function openModal(stock){
+  async function openModal(stock){
       modalState.stockId = stock.id;
       modalState.price = Number(stock.current_price) || 0;
+      modalState.stockSymbol = stock.symbol;
 
-      stockSymbolElement.textContent = stock.symbol;
+      stockSymbolElement.textContent = modalState.stockSymbol;
       stockPriceElement.textContent = formatPrice(modalState.price);
+
 
       quantityInput.value = "0";
       totalCostElement.textContent = "0.00";
@@ -103,14 +116,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       buyModalElement.classList.remove("hidden");
-    }
+  }
     
-
-    function closeModal() {
+  function closeModal() {
       buyModalElement.classList.add("hidden");
-    }
+  }
 
-    confirmBuyBtn.addEventListener("click", async () => {
+  confirmBuyBtn.addEventListener("click", async () => {
       const qty = Number(quantityInput.value) || 0;
       const totalCost = qty * modalState.price;
 
@@ -130,26 +142,24 @@ document.addEventListener("DOMContentLoaded", () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             stockId: modalState.stockId,
+            stockSymbol: modalState.stockSymbol,
             quantity: qty
           })
         });
 
         if (!res.ok) {
-          const error = await res.json();
-          showBuyError(error.message || "Purchase failed.");
+          const error = await res.json().catch(() => ({}));
+          showBuyError(error.error || error.details || "Purchase failed.");
           return;
         }
 
         closeModal();
         fetchStocks();
       } catch (err) {
-        console.error("BUY ERROR:", err?.message, err?.stack, err);
-        return res.status(500).json({ error: "Failed to purchase stock.", details: err?.message });
-      }
-    });
-
-
-  searchButton.addEventListener("click", applySearch);
+          console.error("BUY ERROR:", err);
+          showBuyError("Purchase failed.");
+}
+  });
 
   searchInput.addEventListener("input", applySearch);
 

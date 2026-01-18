@@ -22,6 +22,7 @@ CREATE TABLE if NOT EXISTS portfolios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     stock_id INTEGER NOT NULL,
+    stock_symbol TEXT NOT NULL,
     quantity REAL NOT NULL,
     total_cost REAL NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),

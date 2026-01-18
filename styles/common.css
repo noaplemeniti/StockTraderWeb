@@ -15,18 +15,19 @@ nav{
     gap: 15px;
     margin-bottom: 20px;
     padding: 20px;
+    font-size: 24px;
     background-color: var(--backgroundSecondary);
     border-radius: 8px;
     align-items: stretch;
 }
 
-nav a:last-child {
+nav form {
     margin-left: auto;
 }
 
 nav a{
     text-decoration: none;
-    font-size: 24px;
+    font-size: inherit;
     padding-top: auto;
     padding-bottom: auto;
 
@@ -41,16 +42,21 @@ nav a:active{
 }
 
 #logout-button {
-    font-size: 24px;
     padding-top: auto;
     padding-bottom: auto;
     color: var(--textSecondary);
     background: none;
     border: none;
     cursor: pointer;
+    font: inherit;
+    float: right;
+    line-height: inherit;
 }
 
 #logout-button:hover {
     color: var(--accentHover);
+}
 
+#logout-button:active {
+    color: var(--accentActive);
 }

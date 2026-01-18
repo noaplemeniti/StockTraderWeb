@@ -94,7 +94,7 @@ app.post("/api/buy", async (req, res) => {
   const userId = req.session?.userId;
   if (!userId) return res.status(401).json({ error: "No user logged in." });
 
-  const { stockId, quantity } = req.body ?? {};
+  const { stockId, stockSymbol, quantity } = req.body ?? {};
   const qty = Number(quantity);
   const sid = Number(stockId);
 
@@ -112,13 +112,11 @@ app.post("/api/buy", async (req, res) => {
     const totalCost = qty * Number(stock.current_price);
     const balance = Number(user.balance) || 0;
 
-
-
     if (balance < totalCost) {
       return res.status(400).json({ error: "Insufficient balance." });
     }
 
-    await portfolioRepository.buy(userId, sid, qty, totalCost);
+    await portfolioRepository.buy(userId, sid, stockSymbol, qty, totalCost);
     await userRepository.updateUserBalance(userId, balance - totalCost);
 
     return res.json({ message: "Stock purchased successfully." });
@@ -147,7 +145,7 @@ app.post("/api/sell", async (req, res) => {
 
     const stock = await stockRepository.getStockById(sid);
     if (!stock) return res.status(404).json({ error: "Stock not found." });
-
+    await portfolioRepository.deleteStockFromPortfolio(userId, sid);
     await portfolioRepository.sell(userId, sid, qty);
 
     const totalProceeds = qty * Number(stock.current_price);
@@ -182,6 +180,19 @@ app.post("/api/logout", (req, res) => {
     }
     res.redirect("/pages/login.html");
   });
+});
+
+app.get('/api/user/portfolio', async (req, res) => {
+  const userId = req.session?.userId;
+  if (!userId) return res.status(401).json({ error: "No user logged in." });
+  try {
+    const portfolio = await portfolioRepository.getPortfolioByUserId(userId);
+    const profitLoss = await portfolioRepository.getUserProfitLoss(userId);
+    return res.json({ portfolio: portfolio || [], profitLoss: profitLoss || 0 });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Failed to fetch portfolio." });
+  }
 });
 
 app.listen(PORT, () => {
