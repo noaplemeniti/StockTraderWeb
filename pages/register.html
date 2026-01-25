@@ -9,11 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/auth.css">
     <link rel="stylesheet" href="../styles/register.css">
+    <script src="../scripts/register.js" defer></script>
 </head>
 
 <body>
     <h1>Register</h1>
-    <form action="/api/register" method="post">
+    <form id="registrationForm">
         <div class="form-grid">
             <label for="email">E-mail address:</label>
             <input type="text" id="email" name="email" required>
@@ -22,7 +23,7 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
             <label for ="confirm-password">Confirm Password:</label>
-            <input type="password" id="confirm-password" name="confirmPassword" required>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
         </div>
         <button type="submit">Register</button>
         <br>

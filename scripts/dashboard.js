@@ -1,18 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tableBody = document.querySelector("#stocksTable tbody");
-    const balanceDisplay = document.getElementById("user-balance-display");
-    const portfolioValueDisplay = document.getElementById("portfolio-value-display");
-    const profitLossDisplay = document.getElementById("profit-loss-display");
+    const balanceDisplay = document.getElementById("userBalance");
+    const portfolioValueDisplay = document.getElementById("portfolioValue");
+    const profitLossDisplay = document.getElementById("profitLoss");
 
-    const closeBtnModal = document.getElementById("close-modal");
-    const sellBtnModal = document.getElementById("sell-stock-modal");
-    const balanceModal = document.getElementById("balance-modal");
-    const quantityInputModal = document.getElementById("quantity-input-modal");
-    const quantityOwnedModal = document.getElementById("quantity-owned-modal");
-    const averagePriceModal = document.getElementById("average-price-modal");
-    const currentPriceModal = document.getElementById("current-price-modal");
-    const profitLossModal = document.getElementById("profit-loss-modal");
-    const errorModal = document.getElementById("error-modal");
+    const closeBtnModal = document.getElementById("closeModal");
+    const sellBtnModal = document.getElementById("sellStockModal");
+    const balanceModal = document.getElementById("balanceModal");
+    const quantityInputModal = document.getElementById("quantityInputModal");
+    const quantityOwnedModal = document.getElementById("quantityOwnedModal");
+    const averagePriceModal = document.getElementById("averagePriceModal");
+    const currentPriceModal = document.getElementById("currentPriceModal");
+    const profitLossModal = document.getElementById("profitLossModal");
+    const errorModal = document.getElementById("errorModal");
     const sellModal = document.getElementById("sellModal");
 
     if(!tableBody) console.error("Table body not found");

@@ -1,0 +1,45 @@
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modalContent {
+  background: var(--backgroundSecondary);
+  padding: 20px;
+  border-radius: 12px;
+  width: 320px;
+  max-width: 600px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.settingsSection {
+  display: grid;
+  grid-template-columns: 240px auto;
+  gap: 8px 12px;
+  align-items: center;
+  row-gap: 20px;
+}
+
+h3 {
+    margin: 0;
+}
+
+.modalError {
+    color: red;
+    margin: 10px 0;
+}
+
+.hidden {
+    display: none !important;
+}

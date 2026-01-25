@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="">
         <link rel="stylesheet" href="../styles/common.css">
         <script src="../scripts/theme.js" defer></script>
+        <script src="../scripts/profile.js" defer></script>
     </head>
     <body>
         <nav>
@@ -21,10 +22,14 @@
             </form>
         </nav>
         <h1>Profile</h1>
-        <p>!TODO: Implement user profile page to display and edit user information.
-            Use Grid or Flex layout to organize profile details such as:
-            Username, E-mail, Joined Date, etc.
-            Also add settings options for changing password and deleting account.
-        </p>
+        <h2>User Information</h2>
+        <h3>Username: <span id="username"></span></h3>
+        <h3>Email: <span id="email"></span></h3>
+        <h3>Account Created On: <span id="createdAt"></span></h3>
+        <h2>Portfolio Summary</h2>
+        <h3>Total Balance: $<span id="totalBalance">0.00</span></h3>
+        <h3>Number of Stocks Owned: <span id="stocksOwned">0</span></h3>
+        <h3>Value of Stocks: $<span id="stocksValue">0.00</span></h3>
+        <h3>View owned stocks? <a href="stocks.html">View Stocks</a></h3>
     </body>
 </html>

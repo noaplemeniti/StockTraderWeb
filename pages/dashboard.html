@@ -23,9 +23,9 @@
             </form>
         </nav>
         <h1>My Portfolio</h1>
-        <h2 id="balance">Balance: $<span id="user-balance-display">-</span></h2>
-        <h2 id="portfolio-value">Value: $<span id="portfolio-value-display">-</span></h2>
-        <h2 id="profit-loss">Profit/Loss: $<span id="profit-loss-display">-</span></h2>
+        <h2>Balance: $<span id="userBalance">-</span></h2>
+        <h2>Value: $<span id="portfolioValue">-</span></h2>
+        <h2>Profit/Loss: $<span id="profitLoss">-</span></h2>
         <div class="card">
             <table id="stocksTable">
                 <thead>
@@ -52,22 +52,22 @@
                         <strong id="detailStockPrice">-</strong>
                     </div>
                     <div class="row">
-                        <p>Your balance: $<span id="balance-modal">-</span></p>
-                        <p>Owned Quantity: <span id="quantity-owned-modal">0</span></p>
-                        <p>Average Price: $<span id="average-price-modal">0.00</span></p>
-                        <p>Current Price: $<span id="current-price-modal">0.00</span></p>
-                        <p>Profit/Loss: $<span id="profit-loss-modal">0.00</span></p>
+                        <p>Your balance: $<span id="balanceModal">-</span></p>
+                        <p>Owned Quantity: <span id="quantityOwnedModal">0</span></p>
+                        <p>Average Price: $<span id="averagePriceModal">0.00</span></p>
+                        <p>Current Price: $<span id="currentPriceModal">0.00</span></p>
+                        <p>Profit/Loss: $<span id="profitLossModal">0.00</span></p>
                     </div>
                     <div class="row">
-                        <input type="number" id="quantity-input-modal" placeholder="Quantity to sell" min="1">
+                        <input type="number" id="quantityInputModal" placeholder="Quantity to sell" min="1">
                     </div>
                     <div class="row">
-                        <p id="error-modal" class="hidden">
+                        <p id="errorModal" class="hidden">
                         </p>
                     </div>
                     <div class="row">
-                        <button id="close-modal">Close</button>
-                        <button id="sell-stock-modal">Sell</button>
+                        <button id="closeModal">Close</button>
+                        <button id="sellStockModal">Sell</button>
                     </div>
                 </div>
             </div>

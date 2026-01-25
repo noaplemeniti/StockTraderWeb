@@ -47,6 +47,10 @@ app.post("/api/register", async (req, res) => {
     return res.status(400).json({ error: "Passwords do not match." });
   }
 
+  if(!userRepository.validateEmailFormat(email)) {
+    return res.status(400).json({ error: "Invalid email format." });
+  }
+
   try{
     const existingUser = await userRepository.getUserByUsername(username);
     if(existingUser) {
@@ -126,7 +130,6 @@ app.post("/api/buy", async (req, res) => {
   }
 });
 
-
 app.post("/api/sell", async (req, res) => {
   const userId = req.session?.userId;
   if (!userId) return res.status(401).json({ error: "No user logged in." });
@@ -192,6 +195,113 @@ app.get('/api/user/portfolio', async (req, res) => {
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Failed to fetch portfolio." });
+  }
+});
+
+app.get('/api/user/info', async (req, res) => {
+  const userId = req.session?.userId;
+  if (!userId) return res.status(401).json({ error: "No user logged in." });
+  try {
+    const user = await userRepository.getUserById(userId);
+    if (!user) return res.status(404).json({ error: "User not found." });
+    return res.json({
+      username: user.username,
+      email: user.email,
+      createdAt: user.created_at
+    });
+  } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: "Failed to fetch user info." });
+  }
+});
+
+app.put("/api/user/updatePassword", async (req, res) => {
+  const userId = req.session?.userId;
+  if (!userId) return res.status(401).json({ error: "No user logged in." });
+  const { currentPassword, newPassword, confirmNewPassword } = req.body ?? {};
+
+  if (!currentPassword || !newPassword || !confirmNewPassword) {
+    return res.status(400).json({ error: "Missing required fields." });
+  }
+  if (newPassword !== confirmNewPassword) {
+    return res.status(400).json({ error: "New passwords do not match." });
+  }
+  try {
+    const user = await userRepository.getUserById(userId);
+    if (!user) return res.status(404).json({ error: "User not found." });
+    const passwordMatch = await verifyPassword(currentPassword, user.password_hash);
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Current password is incorrect." });
+    }
+    const newHashedPassword = await hashPassword(newPassword);
+    await userRepository.updateUserPassword(userId, newHashedPassword);
+    return res.json({ message: "Password updated successfully." });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Failed to update password." });
+  }
+});
+
+app.put("/api/user/updateEmail", async (req, res) => {
+  const userId = req.session?.userId;
+  if (!userId) return res.status(401).json({ error: "No user logged in."})
+  const { newEmail } = req.body ?? {};
+
+  if (!newEmail) {
+    return res.status(400).json({ error: "New email is required." });
+  }
+
+  if (!userRepository.validateEmailFormat(newEmail)) {
+    return res.status(400).json({ error: "Invalid email format." });
+  }
+  try {
+    const existingEmail = await userRepository.getUserByEmail(newEmail);
+    if (existingEmail) {
+      return res.status(409).json({ error: "Email already in use." });
+    }
+    await userRepository.updateUserEmail(userId, newEmail);
+    return res.json({ message: "Email updated successfully." });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Failed to update email." });
+  }
+});
+
+app.put("/api/user/updateUsername", async (req, res) => {
+  const userId = req.session?.userId;
+  if (!userId) return res.status(401).json({ error: "No user logged in."})
+  const { newUsername } = req.body ?? {};
+  if (!newUsername) {
+    return res.status(400).json({ error: "New username is required." });
+  }
+  try {
+    const existingUser = await userRepository.getUserByUsername(newUsername); 
+    if (existingUser) {
+      return res.status(409).json({ error: "Username already taken." });
+    }
+    await userRepository.updateUsername(userId, newUsername);
+    return res.json({ message: "Username updated successfully." });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Failed to update username." });
+  }
+});
+
+app.delete("/api/user/deleteAccount", async (req, res) => {
+  const userId = req.session?.userId;
+  if (!userId) return res.status(401).json({ error: "No user logged in."});
+  try {
+    await portfolioRepository.deletePortfolioByUserId(userId);
+    await userRepository.deleteUserById(userId);
+    req.session.destroy((err) => {
+      if (err) {
+        console.error("Failed to destroy session after account deletion:", err);
+      }
+      return res.json({ message: "Account deleted successfully." });
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Failed to delete account." });
   }
 });
 

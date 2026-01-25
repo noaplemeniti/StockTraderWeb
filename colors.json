@@ -6,6 +6,7 @@
     "textSecondary": "#cccccc",
     "accent": "#224722",
     "accentHover": "#1F3D1F",
+    "accentActive": "#193319",
     "accentBorder": "#112411",
     "error": "#ff4444",
     "success": "#00ff66",
@@ -16,11 +17,38 @@
     "backgroundSecondary": "#f5f5f5",
     "textPrimary": "#000000",
     "textSecondary": "#333333",
-    "accent": "#007bff",
-    "accentHover": "#005fcc",
+    "accent": "#D8EBEB",
+    "accentHover": "#CAE6E6",
+    "accentActive": "#B2D6D6",
     "accentBorder": "#003f99",
     "error": "#d00000",
     "success": "#00bb44",
+    "cardBackground": "#ffffff"
+  },
+  "blue": {
+    "background": "#e6f0ff",
+    "backgroundSecondary": "#cce0ff",
+    "textPrimary": "#000033",
+    "textSecondary": "#333366",
+    "accent": "#BDD6FF",
+    "accentHover": "#AFC7F0",
+    "accentActive": "#A0BBE8",
+    "accentBorder": "#5AC1D6",
+    "error": "#cc0000",
+    "success": "#009900",
+    "cardBackground": "#ffffff"
+  },
+  "purple": {
+    "background": "#f3e6ff",
+    "backgroundSecondary": "#e0ccff",
+    "textPrimary": "#330033",
+    "textSecondary": "#663366",
+    "accent": "#CAAFED",
+    "accentHover": "#C0A2E8",
+    "accentActive": "#B899E0",
+    "accentBorder": "#440088",
+    "error": "#cc0000",
+    "success": "#009900",
     "cardBackground": "#ffffff"
   }
 }

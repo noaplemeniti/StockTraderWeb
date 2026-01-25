@@ -60,3 +60,23 @@ nav a:active{
 #logout-button:active {
     color: var(--accentActive);
 }
+
+button {
+    background-color: var(--accent);
+    color: var(--buttonText);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    max-width: 80px;
+    max-height: 30px;
+}
+
+button:hover {
+    background-color: var(--accentHover);
+}
+
+button:active {
+    background-color: var(--accentActive);
+}

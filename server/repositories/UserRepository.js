@@ -41,7 +41,7 @@ class UserRepository {
 
     createUser(username, email, passwordHash) {
         return new Promise((resolve, reject) => {
-            const query = `INSERT INTO users (username, email, password_hash, balance) VALUES (?, ?, ?, 0)`;
+            const query = `INSERT INTO users (username, email, password_hash, balance) VALUES (?, ?, ?, 10000)`;
             this.db.run(query, [username, email, passwordHash], function(err){
                 if(err) {
                     return reject(err);
@@ -67,6 +67,63 @@ class UserRepository {
         return new Promise((resolve, reject) => {
             const query = `UPDATE users SET balance = ? WHERE id = ?`;  
             this.db.run(query, [newBalance, userId], function(err) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(this.changes);
+            });
+        });
+    }
+
+    updateUserPassword(userId, newPasswordHash) {
+        return new Promise((resolve, reject) => {
+            const query = `UPDATE users SET password_hash = ? WHERE id = ?`;
+            this.db.run(query, [newPasswordHash, userId], function(err) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(this.changes);
+            });
+        });
+    }
+
+    validateEmailFormat(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    updateUserEmail(userId, newEmail) {
+        return new Promise((resolve, reject) => {
+            const query = `UPDATE users
+            SET email = ?
+            WHERE id = ?`;
+            this.db.run(query, [newEmail, userId], function(err) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(this.changes);
+            });
+        });
+    }
+
+    updateUsername(userId, newUsername) {
+        return new Promise((resolve, reject) => {
+            const query = `UPDATE users
+            SET username = ?
+            WHERE id = ?`;
+            this.db.run(query, [newUsername, userId], function(err) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(this.changes);
+            });
+        });
+    }
+
+    deleteUserById(userId) {
+        return new Promise((resolve, reject) => {
+            const query = `DELETE FROM users WHERE id = ?`;
+            this.db.run(query, [userId], function(err) {
                 if (err) {
                     return reject(err);
                 }

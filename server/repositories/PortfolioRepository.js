@@ -14,6 +14,7 @@ class PortfolioRepository {
             });
         });
     }
+
     buy(userId, stockId, stockSymbol, quantity, totalCost) {
         return new Promise((resolve, reject) => {
             const query = `
@@ -32,7 +33,7 @@ class PortfolioRepository {
     }
 
 
-   sell(userId, stockId, qtySold) {
+    sell(userId, stockId, qtySold) {
     return new Promise((resolve, reject) => {
     this.db.serialize(() => {
       this.db.run("BEGIN IMMEDIATE TRANSACTION");
@@ -100,8 +101,7 @@ class PortfolioRepository {
       });
     });
   });
-}
-
+    }
 
     deleteStockFromPortfolio(userId, stockId) {
         return new Promise((resolve, reject) => {
@@ -144,7 +144,16 @@ class PortfolioRepository {
             })   
         });
     }
-            
+
+    deletePortfolioByUserId(userId) {
+        return new Promise((resolve, reject) => {
+            const query = `DELETE FROM portfolios WHERE user_id = ?`;
+            this.db.run(query, [userId], function (err) {
+                if (err) return reject(err);
+                resolve(this.changes);
+            });
+        });
+    }            
 }
 
 module.exports = PortfolioRepository;
