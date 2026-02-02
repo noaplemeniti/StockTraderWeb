@@ -7,28 +7,37 @@
     <title>Login</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../styles/auth.css">
+    <link rel="stylesheet" href="../styles/login.css">
     <script src="../scripts/login.js" defer></script>
 </head>
 
 <body>
-    <h1>Login</h1>
-    <form id="loginForm">
-        <div class="form-grid">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+    <div class="page">
+        <div class="left">
+            <p id="slogan">INVESTING<br>
+                WITHOUT<br>
+                EFFORT</p>
         </div>
-        <button type="submit">Login</button>
-        <br>
-        <div class="form-footer">
-            <span>Not registered?</span>
-            <a id="not-registered" href="register.html">Register here</a>
-        </div>
-
-    </form>
-
+        <div class="right">
+            <h1>Login</h1>
+            <form id="loginForm">
+                <div class="formGrid">
+                    <div class="inputRow">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="inputRow">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                <button type="submit">Login</button>
+                </div>
+                <div class="formFooter">
+                    <p>Not registered?</p>
+                    <a id="not-registered" href="register.html">Register with Email</a>
+                </div>
+           </form>
+       </div>
+    </div>
 </body>
-
 </html>
