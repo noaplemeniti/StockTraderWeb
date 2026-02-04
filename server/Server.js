@@ -198,6 +198,29 @@ app.get('/api/user/portfolio', async (req, res) => {
   }
 });
 
+app.get("/api/user/portfolioValue", async (req, res) => {
+  const userId = req.session?.userId;
+  if (!userId) return res.status(401).json({ error: "No user logged in." });
+  try {
+    const portfolioValue = await portfolioRepository.getPortfolioValue(userId);
+    return res.json({ portfolioValue: portfolioValue || 0 });
+  } catch (err) {
+    return res.status(500).json({ error: "Failed to fetch portfolio value." });
+  }
+});
+
+app.get("/api/user/profitLoss", async (req, res) => {
+  const userId = req.session?.userId;
+  if (!userId) return res.status(401).json({ error: "No user logged in." });
+  try {
+    const profitLoss = await portfolioRepository.getUserProfitLoss(userId);
+    return res.json({ profitLoss: profitLoss || 0 });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Failed to fetch profit/loss." });
+  }
+});
+
 app.get('/api/user/info', async (req, res) => {
   const userId = req.session?.userId;
   if (!userId) return res.status(401).json({ error: "No user logged in." });
@@ -304,6 +327,21 @@ app.delete("/api/user/deleteAccount", async (req, res) => {
     return res.status(500).json({ error: "Failed to delete account." });
   }
 });
+
+app.get("/api/stocks/:stockId", async (req, res) => {
+  const stockId = Number(req.params.stockId);
+  if (!Number.isInteger(stockId)) {
+    return res.status(400).json({ error: "Invalid stockId." });
+  }
+  try {
+    const stock = await stockRepository.getStockById(stockId);
+    return res.json(stock);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Failed to fetch stock." });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

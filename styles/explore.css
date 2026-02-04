@@ -1,4 +1,4 @@
-.modalOverlay {
+.modal-overlay {
   position: fixed;
   inset: 0;
   display: flex;
@@ -8,13 +8,27 @@
   z-index: 1000;
 }
 
-.modalContent {
+.modal-content {
   background: var(--backgroundSecondary);
   padding: 20px;
   border-radius: 12px;
-  width: 320px;
+  min-width: 320px;
   max-width: 600px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#search-input {
+  padding: 12px;
+  border-radius: 6px;
+  background-color: var(--accent);
+  border: 1px solid black;
+  width: 20%;
 }
 
 .row {
@@ -23,11 +37,31 @@
   margin-bottom: 15px;
 }
 
-#buyError {
+#buy-error {
   color: #b00020;
   margin: 10px 0;
 }
 
 .hidden {
   display: none !important;
+}
+
+table, tbody, tr{
+  width: 100%;
+}
+
+.buy-button {
+  background-color: var(--backgroundSecondary);
+  border: solid 1px var(--backgroundSecondary);
+  color: var(--textSecondary);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  width: 90%;
+  height: 80px;
+  margin: 5px 0;
+}
+
+.buy-button span{
+  font-size: 24px;
 }

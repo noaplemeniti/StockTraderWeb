@@ -1,18 +1,25 @@
-.modalOverlay {
+table, tbody, tr{
+  width: 100%;
+}
+
+tr{
+  gap: 10px;
+}
+
+.modal-overlay {
   position: fixed;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.5);
   z-index: 1000;
 }
 
-.modalContent {
+.modal-content {
   background: var(--backgroundSecondary);
   padding: 20px;
   border-radius: 12px;
-  width: 320px;
+  min-width: 320px;
   max-width: 600px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
@@ -23,11 +30,53 @@
   margin-bottom: 15px;
 }
 
-#buyError {
+#buy-error {
   color: #b00020;
   margin: 10px 0;
 }
 
 .hidden {
   display: none !important;
+}
+
+.sell-button {
+  background-color: var(--backgroundSecondary);
+  color: var(--textSecondary);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+}
+
+#profit.positive {
+    color: #2ecc71;
+}
+
+#profit.negative {
+    color: #e74c3c;
+}
+
+#profit.positive::before {
+    content: "▲ ";
+    font-size: 0.8rem;
+}
+
+#profit.negative::before {
+    content: "▼ ";
+    font-size: 0.8rem;
+}
+
+.sell-button {
+  background-color: var(--backgroundSecondary);
+  border: solid 1px var(--backgroundSecondary);
+  color: var(--textSecondary);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  width: 90%;
+  height: 80px;
+  margin: 5px 0;
+}
+
+.sell-button span{
+  font-size: 24px;
 }

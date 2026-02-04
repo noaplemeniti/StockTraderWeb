@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="../styles/settings.css">
         <script src="../scripts/theme.js" defer></script>
         <script src="../scripts/settings.js" defer></script>
+        <script src="../scripts/info.js" defer></script>
     </head>
     <body>
         <nav>
@@ -22,101 +23,106 @@
                 <button type="submit" id="logout-button"><img src="../icons/logout.svg" alt="Logout"/></button>
             </form>
         </nav>
-        <h1>Settings</h1>
-        <h2>Account settings.</h2>
-        <div class="settingsSection">
-            <h3>Change Password?</h3>
-            <button id="changePasswordButton">Change</button>
-            <h3>Change Email?</h3>
-            <button id="changeEmailButton">Change</button>
-            <h3>Change Username?</h3>
-            <button id="changeUsernameButton">Change</button>
-            <h3>Delete Account?</h3>
-            <button id="deleteAccountButton">Delete</button>
-        </div>
-        <h2>Theme settings.</h2>
-        <div class="settingsSection">
-            <h3>Dark Theme</h3>
-            <button id="darkThemeButton">Enable</button>
-            <h3>Light Theme</h3>
-             <button id="lightThemeButton">Enable</button>
-            <h3>Blue Theme</h3>
-             <button id="blueThemeButton">Enable</button>            
-             <h3>Purple Theme</h3>
-             <button id="purpleThemeButton">Enable</button>
-        </div>
+        <main>
+            <div class="info-section">
+                <h2>Balance: $<span id="user-balance">-</span></h2>
+                <h2>Value: $<span id="portfolio-value">-</span></h2>
+                <h2>Profit/Loss: $<span id="profit-loss">-</span></h2>
+            </div>
+            <div class="main-section">
+                <h1>Settings</h1>
+                <h2>Account settings</h2>
+                <div class="settings-section">
+                    <h3>Change Password?</h3>
+                    <button class="settings-button" id="change-password-button">Change</button>
+                    <h3>Change Email?</h3>
+                    <button class="settings-button"  id="change-email-button">Change</button>
+                    <h3>Change Username?</h3>
+                    <button class="settings-button"  id="change-username-button">Change</button>
+                    <h3>Delete Account?</h3>
+                    <button class="settings-button" id="delete-account-button">Delete</button>
+                </div>
+                <h2>Theme settings</h2>
+                <div class="settings-section">
+                    <h3>Dark Theme</h3>
+                    <button class="settings-button" id="dark-theme-button">Enable</button>
+                    <h3>Light Theme</h3>
+                    <button class="settings-button" id="light-theme-button">Enable</button>
+                </div>
+            </div>
+        </main>
 
-        <div class="modalOverlay hidden" id="emailModal">
-            <div class="modalContent">
+        <div class="modal-overlay hidden" id="email-modal">
+            <div class="modal-content">
                 <h2>Change Email</h2>
                 <div class="row">
-                    <label for="newEmailInput">New Email:</label>
-                    <input type="email" id="newEmailInput" required>
+                    <label for="new-email-input">New Email: </label>
+                    <input class="modal-input" type="email" id="new-email-input" required>
                 </div>
                 <div class="row">
-                    <button id="closeEmailModal">Close</button>
-                    <button id="submitEmailChange">Submit</button>
+                    <button class="modal-button" id="close-email-modal">Close</button>
+                    <button class="modal-button" id="submit-email-change">Submit</button>
                 </div>
                 <div class="row">
-                    <p id="emailError" class="modalError hidden"></p>
+                    <p id="email-error" class="modal-error hidden"></p>
                 </div>
             </div>
         </div>
 
-        <div class="modalOverlay hidden" id="passwordModal">
-            <div class="modalContent">
+        <div class="modal-overlay hidden" id="password-modal">
+            <div class="modal-content">
                 <h2>Change Password</h2>
                 <div class="row">
-                    <label for="currentPasswordInput">Current Password:</label>
-                    <input type="password" id="currentPasswordInput" required>
+                    <label for="current-password-input">Current Password: </label>
+                    <input class="modal-input" type="password" id="current-password-input" required>
                 </div>
                 <div class="row">
-                    <label for="newPasswordInput">New Password:</label>
-                    <input type="password" id="newPasswordInput" required>
+                    <label for="new-password-input">New Password: </label>
+                    <input class="modal-input" type="password" id="new-password-input" required>
                 </div>
                 <div class="row">
-                    <label for="confirmNewPasswordInput">Confirm New Password:</label>
-                    <input type="password" id="confirmNewPasswordInput" required>
+                    <label for="confirm-new-password-input">Confirm New Password: </label>
+                    <input class="modal-input" type="password" id="confirm-new-password-input" required>
                 </div>
                 <div class="row">
-                    <button id="closePasswordModal">Close</button>
-                    <button id="submitPasswordChange">Submit</button>
+                    <button class="modal-button" id="close-password-modal">Close</button>
+                    <button class="modal-button" id="submit-password-change">Submit</button>
                 </div>
                 <div class="row">
-                    <p id="passwordError" class="modalError hidden"></p>
+                    <p id="password-error" class="modal-error hidden"></p>
                 </div>
             </div>
         </div>
 
-        <div class="modalOverlay hidden" id="usernameModal">
-            <div class="modalContent">
+        <div class="modal-overlay hidden" id="username-modal">
+            <div class="modal-content">
                 <h2>Change Username</h2>
                 <div class="row">
-                    <label for="newUsernameInput">New Username:</label>
-                    <input type="text" id="newUsernameInput" required>
+                    <label for="new-username-input">New Username: </label>
+                    <input class="modal-input" type="text" id="new-username-input" required>
                 </div>
                 <div class="row">
-                    <button id="closeUsernameModal">Close</button>
-                    <button id="submitUsernameChange">Submit</button>
+                    <button class="modal-button" id="close-username-modal">Close</button>
+                    <button class="modal-button" id="submit-username-change">Submit</button>
                 </div>
                 <div class="row">
-                    <p id="usernameError" class="modalError hidden"></p>
+                    <p id="username-error" class="modal-error hidden"></p>
                 </div>
             </div>
         </div>
 
-        <div class="modalOverlay hidden" id="deleteAccountModal">
-            <div class="modalContent">
+        <div class="modal-overlay hidden" id="delete-account-modal">
+            <div class="modal-content">
                 <h2>Delete Account</h2>
                 <div class="row">
                     <p>Are you sure you want to delete your account? This action is irreversible.</p>
                 </div>
                 <div class="row">
-                    <button id="closeDeleteAccountModal">Close</button>
-                    <button id="confirmDeleteAccount">Delete</button>
+                    <button class="modal-button" id="close-delete-account-modal">Close</button>
+                    <button class="modal-button" id="confirm-delete-account">Delete</button>
                 </div>
                 <div class="row">
-                    <p id="deleteError" class="modalError hidden"></p>
+                    <p id="delete-error" class="modal-error hidden"></p>
                 </div>
             </div>
     </body>

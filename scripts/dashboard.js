@@ -1,19 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const tableBody = document.querySelector("#stocksTable tbody");
-    const balanceDisplay = document.getElementById("userBalance");
-    const portfolioValueDisplay = document.getElementById("portfolioValue");
-    const profitLossDisplay = document.getElementById("profitLoss");
+    const tableBody = document.querySelector("#stocks-table tbody");
+    const balanceDisplay = document.getElementById("user-balance");
+    const portfolioValueDisplay = document.getElementById("portfolio-value");
+    const profitLossDisplay = document.getElementById("profit-loss");
 
-    const closeBtnModal = document.getElementById("closeModal");
-    const sellBtnModal = document.getElementById("sellStockModal");
-    const balanceModal = document.getElementById("balanceModal");
-    const quantityInputModal = document.getElementById("quantityInputModal");
-    const quantityOwnedModal = document.getElementById("quantityOwnedModal");
-    const averagePriceModal = document.getElementById("averagePriceModal");
-    const currentPriceModal = document.getElementById("currentPriceModal");
-    const profitLossModal = document.getElementById("profitLossModal");
-    const errorModal = document.getElementById("errorModal");
-    const sellModal = document.getElementById("sellModal");
+    const closeBtnModal = document.getElementById("close-modal");
+    const sellBtnModal = document.getElementById("sell-stock-modal");
+    const balanceModal = document.getElementById("balance-modal");
+    const quantityInputModal = document.getElementById("quantity-input-modal");
+    const quantityOwnedModal = document.getElementById("quantity-owned-modal");
+    const averagePriceModal = document.getElementById("average-price-modal");
+    const currentPriceModal = document.getElementById("current-price-modal");
+    const profitLossModal = document.getElementById("profit-loss-modal");
+    const errorModal = document.getElementById("error-modal");
+    const sellModal = document.getElementById("sell-modal");
 
     if(!tableBody) console.error("Table body not found");
     if(!balanceDisplay) console.error("Balance display not found");
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
         profitLoss: 0
     };
 
-    portfolioData = [];
+    let portfolioData = [];
 
     function formatPrice(value) {
         const num = Number(value);
@@ -57,25 +57,47 @@ document.addEventListener("DOMContentLoaded", () => {
         profitLossDisplay.textContent = formatted;
     }
 
-    function renderTable(portfolio) {
-        tableBody.innerHTML = "";
+    async function renderTable(portfolio) {
+    tableBody.innerHTML = "";
 
-        if (portfolio.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="5">No stocks in portfolio.</td></tr>`;
-            return;
-        }
-        for(const stock of portfolio){
+    if (portfolio.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="5">No stocks in portfolio.</td></tr>`;
+        return;
+    }
+
+    try {
+        const stockPromises = portfolio.map(item => fetchStock(item.stock_id));
+
+        const stocks = await Promise.all(stockPromises);
+
+        portfolio.forEach((item, index) => {
+            const stock = stocks[index];
+            const rawProfit = (stock.current_price * item.quantity) - item.total_cost;
+
+            const isPositive = rawProfit >= 0;
+            const statusClass = isPositive ? "positive" : "negative";
+            const sign = isPositive ? "+" : "";
+
             const row = document.createElement("tr");
             row.innerHTML = `
-            <td>${stock.stock_symbol}</td>
-            <td>${stock.quantity}</td>
-            <td>${formatPrice(stock.total_cost / stock.quantity)}</td>
-            <td>${formatPrice(stock.current_price)}</td>
-            <td>${formatPrice((stock.current_price * stock.quantity) - stock.total_cost)}</td>
-            <td><button data-stock-id="${stock.stock_id}" class="sellButton">Sell</button></td>
-            `;
-            tableBody.appendChild(row);
-        }
+                <td>
+                    <button data-stock-id="${stock.id}" class="sell-button">
+                        <span class="stocks-left">${stock.symbol}</span>
+                        <div class="stocks-right">
+                            <span class="total-value">${formatPrice(stock.current_price * item.quantity)}</span>
+                            <span class="profit ${statusClass}">${sign}${formatPrice(rawProfit)}</span>
+                        </div>
+                        <span class="stocks-left">${item.quantity}</span>
+                        <span class="stocks-right">${formatPrice(stock.current_price)}</span>
+                    </button>
+                </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        } catch (error) {
+            console.error("Error loading portfolio:", error);
+            tableBody.innerHTML = `<tr><td colspan="5">Error loading data.</td></tr>`;
+            }
     }
 
     function getPortfolioValue() {
@@ -86,6 +108,18 @@ document.addEventListener("DOMContentLoaded", () => {
             totalValue += currentPrice * quantity;
         }
         return totalValue;
+    }
+
+    async function fetchStock(stockId) {
+        try {
+            const response = await fetch(`/api/stocks/${stockId}`);
+            if(!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            return data;
+        } catch (err) {
+            console.error("Failed to fetch stock:", err);
+            return null;
+        }
     }
 
     async function fetchPortfolio() {
@@ -121,8 +155,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function openModal(stock) {
         modalState.stockId = stock.stock_id;
-        modalState.stock_symbol = stock.stock_symbol
-        modalState.stock_price = Number(stock.current_price) || 0;
+        modalState.stockSymbol = stock.stock_symbol
+        modalState.stockPrice = Number(stock.current_price) || 0;
         modalState.quantityOwned = Number(stock.quantity) || 0;
         modalState.averagePrice = stock.total_cost / stock.quantity || 0;
         modalState.profitLoss = (modalState.stock_price * modalState.quantityOwned) - (modalState.averagePrice * modalState.quantityOwned);
@@ -148,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     tableBody.addEventListener("click", (e) => {
-        const btn = e.target.closest(".sellButton");
+        const btn = e.target.closest(".sell-button");
         if (!btn) return;
 
         const stockId = btn.getAttribute("data-stock-id");

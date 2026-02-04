@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="../styles/explore.css">
         <script src="../scripts/theme.js" defer></script>
         <script src="../scripts/explore.js" defer></script>
+        <script src="../scripts/info.js" defer></script>
     </head>
     <body>
         <nav>
@@ -22,55 +23,61 @@
                 <button type="submit" id="logout-button"><img src="../icons/logout.svg" alt="Logout"/></button>
             </form>
         </nav>
-        <h1>Explore</h1>
+        <main>
+            <div class="info-section">
+                <h2>Balance: $<span id="user-balance">-</span></h2>
+                <h2>Value: $<span id="portfolio-value">-</span></h2>
+                <h2>Profit/Loss: $<span id="profit-loss">-</span></h2>
+            </div>
+            <div class="main-section">
+                <div class="toolbar">
+                    <h1>Explore</h1>
+                    <input type="text" id="search-input" placeholder="Search stocks...">
+                </div>
 
-        <div class="toolbar">
-            <input type="text" id="searchInput" placeholder="Search stocks...">
-        </div>
+                <div class="card">
+                    <table id="stocks-table">
+                        <thead>
+                            <tr>
 
-        <div class="card">
-            <table id="stocksTable">
-                <thead>
-                    <tr>
-                        <th>Symbol</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
+                            </tr>
+                        </thead>
+                        <tbody>
                     
-                </tbody>
-            </table>
-        </div>
-        <div id="buyModal" class="modalOverlay hidden">
-            <div class="modalContent">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+        <div id="buy-modal" class="modal-overlay hidden">
+            <div class="modal-content">
                 <h2>Buy Stock</h2>
                 
                 <div class="row">
-                    <strong id="stockSymbol">-</strong>
-                    <strong id="stockPrice">-</strong>
+                    <strong id="stock-symbol">-</strong>
+                    <strong id="stock-price">-</strong>
                 </div>
 
                 <div class="row">
-                    <p id="userBalance">
-                        Your Balance: $<span id="balanceAmount">0.00</span>
+                    <p id="user-balance">
+                        Your Balance: $<span id="balance-amount">0.00</span>
                     </p>
                 </div>
 
                 <div class="row">
-                    <label for="quantityInput">Quantity:</label>
-                    <input type="number" id="quantityInput" min="0" value="0">
+                    <label for="quantity-input">Quantity:</label>
+                    <input class="modal-input" type="number" id="quantity-input" min="0" value="0">
                 </div>
 
                 <div class="row">
-                    <strong>Total Cost: $<span id="totalCost">0.00</span></strong>
+                    <strong>Total Cost: $<span id="total-cost">0.00</span></strong>
                 </div>
                 
-                <p id="buyError" class="hidden"></p>
+                <p id="buy-error" class="hidden"></p>
 
                 <div class="row">
-                     <button id="cancelBuy" type="button">Cancel</button>
-                    <button id="confirmBuy" type="button">Buy</button>
+                    <button class="modal-button" id="cancel-buy" type="button">Cancel</button>
+                    <button class="modal-button" id="confirm-buy" type="button">Buy</button>
                 </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-.modalOverlay {
+.modal-overlay {
     position: fixed;
     inset: 0;
     display: flex;
@@ -8,11 +8,11 @@
     z-index: 1000;
 }
 
-.modalContent {
+.modal-content {
   background: var(--backgroundSecondary);
   padding: 20px;
   border-radius: 12px;
-  width: 320px;
+  min-width: 320px;
   max-width: 600px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
@@ -23,7 +23,7 @@
     margin-bottom: 15px;
 }
 
-.settingsSection {
+.settings-section {
   display: grid;
   grid-template-columns: 240px auto;
   gap: 8px 12px;
@@ -35,11 +35,21 @@ h3 {
     margin: 0;
 }
 
-.modalError {
+.modal-error {
     color: red;
     margin: 10px 0;
 }
 
 .hidden {
     display: none !important;
+}
+
+.settings-button {
+    background-color: var(--backgroundSecondary);
+    border: solid 1px var(--backgroundSecondary);
+    color: var(--textSecondary);
+    width: 30%;
+    height: 30px;
+    margin: 5px 0;
+    border-radius: 8px;
 }

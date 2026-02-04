@@ -145,6 +145,18 @@ class PortfolioRepository {
         });
     }
 
+    getPortfolioValue(userId) {
+        return new Promise((resolve, reject) => {
+          const query = 'SELECT SUM(s.current_price * p.quantity) AS portfolio_value FROM portfolios p JOIN stocks s ON p.stock_id = s.id WHERE user_id = ?'
+          this.db.get(query, [userId], (err, row) => {
+            if (err) {
+              return reject(err);
+            }
+            resolve(row?.portfolio_value ?? 0);
+          });
+        });
+    }
+
     deletePortfolioByUserId(userId) {
         return new Promise((resolve, reject) => {
             const query = `DELETE FROM portfolios WHERE user_id = ?`;

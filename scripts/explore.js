@@ -1,16 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const tableBody = document.querySelector("#stocksTable tbody");
-  const searchInput = document.getElementById("searchInput");
+  const tableBody = document.querySelector("#stocks-table tbody");
+  const searchInput = document.getElementById("search-input");
 
-  const cancelBuyBtn = document.getElementById("cancelBuy");
-  const buyModalElement = document.getElementById("buyModal");
-  const stockSymbolElement = document.getElementById("stockSymbol");
-  const stockPriceElement = document.getElementById("stockPrice");
-  const quantityInput = document.getElementById("quantityInput");
-  const balanceAmountElement = document.getElementById("balanceAmount");
-  const totalCostElement = document.getElementById("totalCost");
-  const buyErrorElement = document.getElementById("buyError");
-  const confirmBuyBtn = document.getElementById("confirmBuy");
+  const cancelBuyBtn = document.getElementById("cancel-buy");
+  const buyModalElement = document.getElementById("buy-modal");
+  const stockSymbolElement = document.getElementById("stock-symbol");
+  const stockPriceElement = document.getElementById("stock-price");
+  const quantityInput = document.getElementById("quantity-input");
+  const balanceAmountElement = document.getElementById("balance-amount");
+  const totalCostElement = document.getElementById("total-cost");
+  const buyErrorElement = document.getElementById("buy-error");
+  const confirmBuyBtn = document.getElementById("confirm-buy");
 
   if(!tableBody) console.error("Table body not found");
   if(!cancelBuyBtn) console.error("Cancel buy button not found");
@@ -51,10 +51,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const row = document.createElement("tr");
 
       row.innerHTML = `
-        <td>${stock.symbol}</td>
-        <td>${stock.company_name}</td>
-        <td>${formatPrice(stock.current_price)}</td>
-        <td><button data-stock-id="${stock.id}" class="buyButton">Buy</button></td>
+        <button data-stock-id="${stock.id}" class="buy-button"><span class="stocks-left">${stock.company_name}</span>
+        <span class="stocks-right">${stock.symbol}</span>
+        <span class="stocks-left">Current Price: ${formatPrice(stock.current_price)}</span>
+        <span class="stocks-right">Volatility: ${stock.volatility}</span>
+        </button>
       `;
 
       tableBody.appendChild(row);
@@ -164,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
   searchInput.addEventListener("input", applySearch);
 
   tableBody.addEventListener("click", (e) => {
-    const btn = e.target.closest(".buyButton");
+    const btn = e.target.closest(".buy-button");
     if (!btn) return;
 
     const stockId = Number(btn.dataset.stockId);

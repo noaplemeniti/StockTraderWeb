@@ -1,6 +1,33 @@
-body{
-    background-color: var(--background);
+html{
+    height: 100%;
     margin: 0;
+    width: 100%;
+
+}
+
+body{
+    margin: 0;
+    min-height: 100%;
+}
+
+main{
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.info-section {
+    background-color: var(--backgroundSecondary);
+    width: 20%;
+    padding: 20px;
+}
+
+.main-section {
+    background: linear-gradient(135deg, var(--background), #3a7cb6);
+    min-height: 100vh;
+    width: 80%;
+    padding: 20px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -19,7 +46,6 @@ nav{
     display: flex;
     gap: 15px;
     margin: 0;
-    margin-bottom: 20px;
     padding: 30px;
     font-size: 24px;
     background-color: var(--backgroundSecondary);
@@ -66,7 +92,7 @@ nav a:active{
     color: var(--accentActive);
 }
 
-button {
+.modal-button {
     background-color: var(--accent);
     color: var(--buttonText);
     border: none;
@@ -84,4 +110,20 @@ button:hover {
 
 button:active {
     background-color: var(--accentActive);
+}
+
+.modal-input{
+    padding: 8px;
+    border-radius: 6px;
+    background-color: var(--backgroundSecondary);
+    border: 1px solid var(--opposite);
+    color: var(--textPrimary);
+}
+
+.stocks-right {
+  justify-self: right;
+}
+
+.stocks-left {
+  justify-self: left;
 }

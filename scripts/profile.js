@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const usernameElement = document.getElementById("username");
   const emailElement = document.getElementById("email");
-  const createdAtElement = document.getElementById("createdAt");
-  const totalBalanceElement = document.getElementById("totalBalance");
-  const stocksValueElement = document.getElementById("stocksValue");
-  const stocksOwnedElement = document.getElementById("stocksOwned");
+  const createdAtElement = document.getElementById("created-at");
+  const totalBalanceElement = document.getElementById("total-balance");
+  const stocksValueElement = document.getElementById("stocks-value");
+  const stocksOwnedElement = document.getElementById("stocks-owned");
 
   function renderData(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };

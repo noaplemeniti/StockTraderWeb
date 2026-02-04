@@ -1,76 +1,83 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="../styles/common.css">
-        <link rel="stylesheet" href="../styles/dashboard.css">
-        <script src="../scripts/theme.js" defer></script>
-        <script src="../scripts/stockloader.js" defer></script>
-        <script src="../scripts/dashboard.js" defer></script>
-    </head>
-    <body>
-        <nav>
-            <a href="dashboard.html">HOME</a>
-            <a href="explore.html">EXPLORE</a>
-            <a href="profile.html">PROFILE</a>
-            <a href="settings.html">SETTINGS</a>
-            <form action="/api/logout" method="post" style="display: inline;">
-                <button type="submit" id="logout-button"><img src="../icons/logout.svg" alt="Logout"/></button>
-            </form>
-        </nav>
-        <h1>My Portfolio</h1>
-        <h2>Balance: $<span id="userBalance">-</span></h2>
-        <h2>Value: $<span id="portfolioValue">-</span></h2>
-        <h2>Profit/Loss: $<span id="profitLoss">-</span></h2>
-        <div class="card">
-            <table id="stocksTable">
-                <thead>
-                    <tr>
-                        <th>Symbol</th>
-                        <th>Quantity</th>
-                        <th>Average Price</th>
-                        <th>Current Price</th>
-                        <th>Profit/Loss</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                </tbody>
-            </table>
-        </div>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title></title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="../styles/common.css">
+		<link rel="stylesheet" href="../styles/dashboard.css">
+		<script src="../scripts/theme.js" defer></script>
+		<script src="../scripts/dashboard.js" defer></script>
+        <script src="../scripts/info.js" defer></script>
+	</head>
+	<body>
+		<nav>
+			<a href="dashboard.html">HOME</a>
+			<a href="explore.html">EXPLORE</a>
+			<a href="profile.html">PROFILE</a>
+			<a href="settings.html">SETTINGS</a>
+			<form action="/api/logout" method="post" style="display: inline;">
+				<button type="submit" id="logout-button">
+					<img src="../icons/logout.svg" alt="Logout">
+				</button>
+			</form>
+		</nav>
 
-        <div class="modalOverlay hidden" id="sellModal">
-            <div class="modalContent">
-                <h2>Stock Details</h2>
-                <div id="stockDetailsContent">
-                    <div class="row">
-                        <strong id="detailStockSymbol">-</strong>
-                        <strong id="detailStockPrice">-</strong>
-                    </div>
-                    <div class="row">
-                        <p>Your balance: $<span id="balanceModal">-</span></p>
-                        <p>Owned Quantity: <span id="quantityOwnedModal">0</span></p>
-                        <p>Average Price: $<span id="averagePriceModal">0.00</span></p>
-                        <p>Current Price: $<span id="currentPriceModal">0.00</span></p>
-                        <p>Profit/Loss: $<span id="profitLossModal">0.00</span></p>
-                    </div>
-                    <div class="row">
-                        <input type="number" id="quantityInputModal" placeholder="Quantity to sell" min="1">
-                    </div>
-                    <div class="row">
-                        <p id="errorModal" class="hidden">
-                        </p>
-                    </div>
-                    <div class="row">
-                        <button id="closeModal">Close</button>
-                        <button id="sellStockModal">Sell</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </body>
+		<main>
+			<div class="info-section">
+				<h2>Balance: $<span id="user-balance">-</span></h2>
+				<h2>Value: $<span id="portfolio-value">-</span></h2>
+				<h2>Profit/Loss: $<span id="profit-loss">-</span></h2>
+			</div>
+
+			<div class="main-section">
+				<h1>My Portfolio</h1>
+				<div class="card">
+					<table id="stocks-table">
+						<thead>
+							<tr></tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+		</main>
+
+		<div class="modal-overlay hidden" id="sell-modal">
+			<div class="modal-content">
+				<h2>Stock Details</h2>
+				<div id="stock-details-content">
+					<div class="row">
+						<strong id="detail-stock-symbol">-</strong>
+						<strong id="detail-stock-price">-</strong>
+					</div>
+					<div class="row">
+						<p>Your balance: $<span id="balance-modal">-</span></p>
+						<p>Owned Quantity: <span id="quantity-owned-modal">0</span></p>
+						<p>Average Price: $<span id="average-price-modal">0.00</span></p>
+						<p>Current Price: $<span id="current-price-modal">0.00</span></p>
+						<p>Profit/Loss: $<span id="profit-loss-modal">0.00</span></p>
+					</div>
+					<div class="row">
+						<input
+							class="modal-input"
+							type="number"
+							id="quantity-input-modal"
+							placeholder="Quantity to sell"
+							min="1"
+						>
+					</div>
+					<div class="row">
+						<p id="error-modal" class="hidden"></p>
+					</div>
+					<div class="row">
+						<button class="modal-button" id="close-modal">Close</button>
+						<button class="modal-button" id="sell-stock-modal">Sell</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>

@@ -1,77 +1,73 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const changeEmailButton = document.getElementById("changeEmailButton");
-    const changeUsernameButton = document.getElementById("changeUsernameButton");
-    const changePasswordButton = document.getElementById("changePasswordButton");
-    const deleteAccountButton = document.getElementById("deleteAccountButton");
+    const changeEmailButton = document.getElementById("change-email-button");
+    const changeUsernameButton = document.getElementById("change-username-button");
+    const changePasswordButton = document.getElementById("change-password-button");
+    const deleteAccountButton = document.getElementById("delete-account-button");
 
-    const darkThemeButton = document.getElementById("darkThemeButton");
-    const lightThemeButton = document.getElementById("lightThemeButton");
-    const blueThemeButton = document.getElementById("blueThemeButton");
-    const purpleThemeButton = document.getElementById("purpleThemeButton");
+    const darkThemeButton = document.getElementById("dark-theme-button");
+    const lightThemeButton = document.getElementById("light-theme-button");
 
-    const closeUsernameModalButton = document.getElementById("closeUsernameModal");
-    const closeEmailModalButton = document.getElementById("closeEmailModal");
-    const closePasswordModalButton = document.getElementById("closePasswordModal");
-    const closeDeleteAccountModalButton = document.getElementById("closeDeleteAccountModal");
+    const closeUsernameModalButton = document.getElementById("close-username-modal");
+    const closeEmailModalButton = document.getElementById("close-email-modal");
+    const closePasswordModalButton = document.getElementById("close-password-modal");
+    const closeDeleteAccountModalButton = document.getElementById("close-delete-account-modal");
 
-    const submitUsernameChange = document.getElementById("submitUsernameChange");
-    const submitPasswordChange = document.getElementById("submitPasswordChange");
-    const submitEmailChange = document.getElementById("submitEmailChange");
-    const submitDeleteAccount = document.getElementById("confirmDeleteAccount");
+    const submitUsernameChange = document.getElementById("submit-username-change");
+    const submitPasswordChange = document.getElementById("submit-password-change");
+    const submitEmailChange = document.getElementById("submit-email-change");
+    const submitDeleteAccount = document.getElementById("confirm-delete-account");
 
-    const newUsernameInput = document.getElementById("newUsernameInput");
-    const confirmNewPasswordInput = document.getElementById("confirmNewPasswordInput");
-    const newPasswordInput = document.getElementById("newPasswordInput");
-    const currentPasswordInput = document.getElementById("currentPasswordInput");
-    const newEmailInput = document.getElementById("newEmailInput");
+    const newUsernameInput = document.getElementById("new-username-input");
+    const confirmNewPasswordInput = document.getElementById("confirm-new-password-input");
+    const newPasswordInput = document.getElementById("new-password-input");
+    const currentPasswordInput = document.getElementById("current-password-input");
+    const newEmailInput = document.getElementById("new-email-input");
 
-    const emailError = document.getElementById("emailError");
-    const usernameError = document.getElementById("usernameError");
-    const passwordError = document.getElementById("passwordError");
-    const deleteError = document.getElementById("deleteError");
+    const emailError = document.getElementById("email-error");
+    const usernameError = document.getElementById("username-error");
+    const passwordError = document.getElementById("password-error");
+    const deleteError = document.getElementById("delete-error");
 
     darkThemeButton?.addEventListener("click", () => loadTheme("dark"));
     lightThemeButton?.addEventListener("click", () => loadTheme("light"));
-    blueThemeButton?.addEventListener("click", () => loadTheme("blue"));
-    purpleThemeButton?.addEventListener("click", () => loadTheme("purple"));
 
     function openEmailModal(){
-        const modal = document.getElementById("emailModal");
+        const modal = document.getElementById("email-modal");
         modal.classList.remove("hidden");
     }
 
     function closeEmailModal(){
-        const modal = document.getElementById("emailModal");
+        const modal = document.getElementById("email-modal");
         modal.classList.add("hidden");
     }
 
     function openUsernameModal(){
-        const modal = document.getElementById("usernameModal");
+        const modal = document.getElementById("username-modal");
         modal.classList.remove("hidden");
     }
 
     function closeUsernameModal(){
-        const modal = document.getElementById("usernameModal");
+        const modal = document.getElementById("username-modal");
         modal.classList.add("hidden");
     }
 
     function openPasswordModal(){
-        const modal = document.getElementById("passwordModal");
+        const modal = document.getElementById("password-modal");
         modal.classList.remove("hidden");
     }
 
     function closePasswordModal(){
-        const modal = document.getElementById("passwordModal");
+        const modal = document.getElementById("password-modal");
         modal.classList.add("hidden");
     }
 
     function openDeleteModal(){
-        const modal = document.getElementById("deleteAccountModal");
+        const modal = document.getElementById("delete-account-modal");
         modal.classList.remove("hidden");
     }
 
     function closeDeleteModal(){
-        const modal = document.getElementById("deleteAccountModal");
+        const modal = document.getElementById("delete-account-modal");
         modal.classList.add("hidden");
     }
 

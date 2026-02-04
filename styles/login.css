@@ -65,7 +65,7 @@ button{
 }
 
 
-.inputRow input {
+.input-row input {
     padding: 8px;
     border-radius: 6px;
     border: 1px solid #4b4b4b;
@@ -76,19 +76,19 @@ button{
     height: 30px;
 }
 
-.inputRow{
+.input-row{
     display: flex;
     flex-direction: column;
     width: 65%;
 }
 
-.inputRow label {
+.input-row label {
     color: #a0a0a0;
     margin-top: 16px;
     margin-bottom: 10px;
 }
 
-.formGrid {
+.form-grid {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -96,7 +96,7 @@ button{
     row-gap: 5px;
 }
 
-.formFooter{
+.form-footer{
     display: flex;
     flex-direction: column;
     align-items: center;
