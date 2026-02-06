@@ -40,14 +40,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderTable(stocks) {
+    const safeStocks = Array.isArray(stocks) ? stocks : [];
     tableBody.innerHTML = "";
 
-    if (stocks.length === 0) {
+    if (safeStocks.length === 0) {
       tableBody.innerHTML = `<tr><td colspan="3">No stocks found.</td></tr>`;
       return;
     }
 
-    for (const stock of stocks) {
+    for (const stock of safeStocks) {
       const row = document.createElement("tr");
 
       row.innerHTML = `
@@ -186,7 +187,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function showBuyError(msg) {
   buyErrorElement.textContent = msg || "";
   buyErrorElement.classList.toggle("hidden", !msg);
-}
+  }
+
+  setInterval(fetchStocks, 1000);
 
   fetchStocks();
 });

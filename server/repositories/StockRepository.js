@@ -39,10 +39,10 @@ class StockRepository {
         });
     }
 
-    updateStockPrice(symbol, newPrice) {
+    updateStockPrice(id, newPrice) {
         return new Promise((resolve, reject) => {
-            const query = `UPDATE stocks SET current_price = ?, last_updated = CURRENT_TIMESTAMP WHERE symbol = ?`;
-            this.db.run(query, [newPrice, symbol], function (err) {
+            const query = `UPDATE stocks SET current_price = ?, last_updated = CURRENT_TIMESTAMP WHERE id = ?`;
+            this.db.run(query, [newPrice, id], function (err) {
                 if (err) {
                     return reject(err);
                 }

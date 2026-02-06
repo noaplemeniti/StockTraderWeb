@@ -14,6 +14,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const profitLossModal = document.getElementById("profit-loss-modal");
     const errorModal = document.getElementById("error-modal");
     const sellModal = document.getElementById("sell-modal");
+    const userBalanceDashboard = document.getElementById("user-balance-dashboard");
+    const portfolioValueDashboard = document.getElementById("portfolio-value-dashboard");
+
+    const addFundsBtn = document.getElementById("add-funds");
+    const fundsModalClose = document.getElementById("close-funds-modal")
+    const addFundsModalOverlay = document.getElementById("add-funds-modal");
+    const addFundsSubmit = document.getElementById("add-funds-submit");
+    const currentBalance = document.getElementById("current-balance");
+    const fundsErrorModal = document.getElementById("funds-error-modal");
+
 
     if(!tableBody) console.error("Table body not found");
     if(!balanceDisplay) console.error("Balance display not found");
@@ -41,6 +51,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let portfolioData = [];
 
+    async function renderDashboardData(){
+        await fetchBalance();
+        await getPortfolioValue();
+        userBalanceDashboard.textContent = formatPrice(Number(balanceDisplay.textContent) || 0);
+        portfolioValueDashboard.textContent = formatPrice(Number(portfolioValueDisplay.textContent) || 0);
+    }
+
     function formatPrice(value) {
         const num = Number(value);
         if (!Number.isFinite(num)) return "-";
@@ -58,19 +75,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function renderTable(portfolio) {
+    const safePortfolio = Array.isArray(portfolio) ? portfolio : [];
     tableBody.innerHTML = "";
 
-    if (portfolio.length === 0) {
+    if (safePortfolio.length === 0) {
         tableBody.innerHTML = `<tr><td colspan="5">No stocks in portfolio.</td></tr>`;
         return;
     }
 
     try {
-        const stockPromises = portfolio.map(item => fetchStock(item.stock_id));
+        const stockPromises = safePortfolio.map(item => fetchStock(item.stock_id));
 
         const stocks = await Promise.all(stockPromises);
 
-        portfolio.forEach((item, index) => {
+        safePortfolio.forEach((item, index) => {
             const stock = stocks[index];
             const rawProfit = (stock.current_price * item.quantity) - item.total_cost;
 
@@ -84,11 +102,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     <button data-stock-id="${stock.id}" class="sell-button">
                         <span class="stocks-left">${stock.symbol}</span>
                         <div class="stocks-right">
-                            <span class="total-value">${formatPrice(stock.current_price * item.quantity)}</span>
+                            <span class="total-value">Value: ${formatPrice(stock.current_price * item.quantity)}</span>
                             <span class="profit ${statusClass}">${sign}${formatPrice(rawProfit)}</span>
                         </div>
-                        <span class="stocks-left">${item.quantity}</span>
-                        <span class="stocks-right">${formatPrice(stock.current_price)}</span>
+                        <span class="stocks-left">Quantity: ${item.quantity}</span>
+                        <span class="stocks-right">Current Price: ${formatPrice(stock.current_price)}</span>
                     </button>
                 </td>
                 `;
@@ -153,6 +171,32 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    async function addFunds() {
+        const amountInput = document.getElementById("add-funds-input-modal").value;
+        const amount = Number(amountInput);
+        if (!Number.isFinite(amount) || amount <= 0) {
+            fundsErrorModal.classList.remove("hidden");
+            fundsErrorModal.textContent = "Please enter a valid amount.";
+            return;
+        }
+        try {
+            const res = await fetch("/api/user/addFunds", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ amount })
+            });
+            if(!res.ok){
+                throw new Error(`HTTP ${res.status}`);
+            }
+            closeAddFunds();
+            await fetchBalance();
+        } catch (err) {
+            console.error("Failed to add funds");
+            fundsErrorModal.classList.remove("hidden");
+            fundsErrorModal.textContent = err?.message || "Failed to add funds.";
+        }
+    }
+
     function openModal(stock) {
         modalState.stockId = stock.stock_id;
         modalState.stockSymbol = stock.stock_symbol
@@ -173,8 +217,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function closeModal() {
+        fundsErrorModal.classList.add("hidden");
+        errorModal.textContent = "";
+        quantityInputModal.value = "";
         sellModal.classList.add("hidden");
     }
+
+    async function openAddFunds() {
+        await fetchBalance();
+        currentBalance.textContent = balanceDisplay.textContent;
+        addFundsModalOverlay.classList.remove("hidden");
+    }
+
+    function closeAddFunds(){
+        addFundsModalOverlay.classList.add("hidden");
+    }
+
+    addFundsSubmit.addEventListener("click", addFunds);
+
+    fundsModalClose.addEventListener("click", closeAddFunds);
+
+    addFundsBtn.addEventListener("click", openAddFunds);
+
 
     closeBtnModal.addEventListener("click", () => {
         closeModal();
@@ -226,6 +290,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    setInterval(fetchPortfolio, 1000);
+
     fetchPortfolio();
     fetchBalance();
+    renderDashboardData();
 });

@@ -34,6 +34,10 @@
 
 			<div class="main-section">
 				<h1>My Portfolio</h1>
+				<h2>Balance: $<span id="user-balance-dashboard">-</span></h2>
+				<h2>Value: $<span id="portfolio-value-dashboard">-</span></h2>
+				<button id="add-funds">Add Funds</button>
+				<h1>Owned stocks</h1>
 				<div class="card">
 					<table id="stocks-table">
 						<thead>
@@ -55,8 +59,12 @@
 					</div>
 					<div class="row">
 						<p>Your balance: $<span id="balance-modal">-</span></p>
+					</div>
+					<div class="row">
 						<p>Owned Quantity: <span id="quantity-owned-modal">0</span></p>
 						<p>Average Price: $<span id="average-price-modal">0.00</span></p>
+					</div>
+					<div class="row">
 						<p>Current Price: $<span id="current-price-modal">0.00</span></p>
 						<p>Profit/Loss: $<span id="profit-loss-modal">0.00</span></p>
 					</div>
@@ -76,6 +84,31 @@
 						<button class="modal-button" id="close-modal">Close</button>
 						<button class="modal-button" id="sell-stock-modal">Sell</button>
 					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="hidden modal-overlay" id="add-funds-modal">
+			<div class="modal-content">
+				<h2>Add Funds</h2>
+				<div class="row">
+					<p>Current balance: $<span id="current-balance">-</span><p>
+				</div>
+				<div class="row">
+					<input
+						class="modal-input"
+						type="number"
+						id="add-funds-input-modal"
+						placeholder="Amount to add"
+						min="1"
+					>
+				</div>
+				<div class="row">
+					<p id="funds-error-modal" class="hidden"></p>
+				</div>
+				<div class="row">
+					<button class="modal-button" id="close-funds-modal">Close</button>
+					<button class="modal-button" id="add-funds-submit">Add Funds</button>
 				</div>
 			</div>
 		</div>

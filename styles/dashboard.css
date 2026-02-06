@@ -65,6 +65,25 @@ tr{
     font-size: 0.8rem;
 }
 
+#add-funds {
+  padding: 10px;
+  background-color: var(--backgroundSecondary);
+  color: var(--textSecondary);
+  border: 1px solid var(--backgroundSecondary);
+  border-radius: 5px;
+  cursor: pointer;
+  font: inherit;
+  line-height: inherit;
+}
+
+#add-funds:hover {
+  color: var(--accentHover);
+}
+
+#add-funds:active {
+  color: var(--accentActive);
+}
+
 .sell-button {
   background-color: var(--backgroundSecondary);
   border: solid 1px var(--backgroundSecondary);

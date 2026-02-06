@@ -58,7 +58,7 @@ class UserRepository {
                 if (err) {
                     return reject(err);
                 }
-                resolve(row ? row.balance : null);
+                resolve(row ? Number(row.balance) : null);
             });
         });
     }

@@ -168,7 +168,7 @@ app.get("/api/user/balance", async (req, res) => {
   if (!userId) return res.status(401).json({ error: "No user logged in." });
   try {
     const balance = await userRepository.getUserBalance(userId);
-    return res.json({ balance: balance || 0 });
+    return res.json({ balance: Number(balance) || 0 });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: "Failed to fetch user balance." });
@@ -342,6 +342,49 @@ app.get("/api/stocks/:stockId", async (req, res) => {
   }
 });
 
+app.post("/api/user/addFunds", async (req, res) => {
+  const userId = req.session?.userId;
+  if (!userId) return res.status(401).json({ error: "No user logged in." });
+  const amount = Number(req.body?.amount);
+  if (!Number.isFinite(amount) || amount <= 0) {
+    return res.status(400).json({ error: "Invalid amount." });
+  }
+  try {
+    const currentBalance = Number(await userRepository.getUserBalance(userId)) || 0;
+    const newBalance = currentBalance + amount;
+    await userRepository.updateUserBalance(userId, newBalance);
+    return res.json({ message: "Funds added successfully." });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Failed to update balance." });
+  }
+});
+
+let updating = false;
+
+setInterval(async () => {
+  const stocks = await stockRepository.getAllStocks();
+
+  for (const stock of stocks) {
+    const shock = normalRandom();
+    let newPrice =
+      stock.current_price * Math.exp(stock.volatility * shock);
+
+    newPrice = Math.max(0.01, newPrice);
+    await stockRepository.updateStockPrice(stock.id, newPrice);
+  }
+
+  console.log("Prices updated.");
+}, 5000);
+
+
+
+function normalRandom() {
+  let u = 0, v = 0;
+  while (u === 0) u = Math.random();
+  while (v === 0) v = Math.random();
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+}
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
