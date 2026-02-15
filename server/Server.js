@@ -29,10 +29,10 @@ const portfolioRepository = new PortfolioRepository(db);
 app.get("/api/stocks", async (req, res) => {
   try {
     const stocks = await stockRepository.getAllStocks();
-    res.json(stocks);
+    return res.json(stocks);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to fetch stocks." });
+    return res.status(500).json({ error: "Failed to fetch stocks." });
   }
 });
 
@@ -40,34 +40,37 @@ app.post("/api/register", async (req, res) => {
   const { username, email, password, confirmPassword } = req.body ?? {};
 
   if(!username || !email || !password || !confirmPassword) {
-    res.status(400).json({ error: "Missing required fields." });
+    return res.status(400).json({ error: "Missing required fields." });
   }
 
   if(password !== confirmPassword) {
-    res.status(400).json({ error: "Passwords do not match." });
+    return res.status(400).json({ error: "Passwords do not match." });
   }
 
   if(!userRepository.validateEmailFormat(email)) {
-    res.status(400).json({ error: "Invalid email format." });
+    return res.status(400).json({ error: "Invalid email format." });
   }
 
   try{
     const existingUser = await userRepository.getUserByUsername(username);
     if(existingUser) {
-      res.status(409).json({ error: "Username already taken." });
+      return res.status(409).json({ error: "Username already taken." });
     }
 
     const existingEmail = await userRepository.getUserByEmail(email);
     if(existingEmail) {
-      res.status(409).json({ error: "Email already in use." });
+      return res.status(409).json({ error: "Email already in use." });
     }
     const passwordHash = await hashPassword(password);
     await userRepository.createUser(username, email, passwordHash);
-    return res.redirect("/pages/login.html");
+    return res.json({ message: "Registration successful." });
   }
   catch(err) {
     console.error(err);
-    throw new Error(err?.message || "Server failiure.");
+    if (err?.code === "SQLITE_CONSTRAINT") {
+      return res.status(409).json({ error: "Username or email already in use." });
+    }
+    return res.status(500).json({ error: "Failed to register user." });
   }
 });
 
@@ -83,7 +86,7 @@ app.post("/api/login", async (req, res) => {
     }
     const passwordMatch = await verifyPassword(password, user.password_hash);
     if(!passwordMatch) {
-      return res.status(401).json({ error: "Invalid password." });
+      return res.status(401).json({ error: "Incorrect password." });
     }
     req.session.userId = user.id;
     return res.json({ message: "Login successful." });

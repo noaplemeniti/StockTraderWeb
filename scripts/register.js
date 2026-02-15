@@ -1,5 +1,9 @@
 document.getElementById("registration-form").addEventListener("submit", async (e) => {
     e.preventDefault();
+    const submitButton = e.currentTarget.querySelector("button[type='submit']");
+    if (submitButton) {
+        submitButton.disabled = true;
+    }
     const username = document.getElementById("username").value.trim();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
@@ -23,5 +27,9 @@ document.getElementById("registration-form").addEventListener("submit", async (e
     } catch(err) {
         console.error("Registration error:", err);
         alert("An error occurred during registration.");
+    } finally {
+        if (submitButton) {
+            submitButton.disabled = false;
+        }
     }
 });
