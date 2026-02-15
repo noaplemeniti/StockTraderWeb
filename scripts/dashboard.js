@@ -16,6 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const sellModal = document.getElementById("sell-modal");
     const userBalanceDashboard = document.getElementById("user-balance-dashboard");
     const portfolioValueDashboard = document.getElementById("portfolio-value-dashboard");
+    const stockPriceModal = document.getElementById("stock-price-modal");
+    const stockSymbolModal = document.getElementById("stock-symbol-modal");
 
     const addFundsBtn = document.getElementById("add-funds");
     const fundsModalClose = document.getElementById("close-funds-modal")
@@ -203,13 +205,15 @@ document.addEventListener("DOMContentLoaded", () => {
         modalState.stockPrice = Number(stock.current_price) || 0;
         modalState.quantityOwned = Number(stock.quantity) || 0;
         modalState.averagePrice = stock.total_cost / stock.quantity || 0;
-        modalState.profitLoss = (modalState.stock_price * modalState.quantityOwned) - (modalState.averagePrice * modalState.quantityOwned);
+        modalState.profitLoss = (modalState.stockPrice * modalState.quantityOwned) - (modalState.averagePrice * modalState.quantityOwned);
 
         balanceModal.textContent = formatPrice(Number(balanceDisplay.textContent) || 0);
         quantityOwnedModal.textContent = modalState.quantityOwned;
         averagePriceModal.textContent = formatPrice(modalState.averagePrice);
-        currentPriceModal.textContent = formatPrice(modalState.stock_price);
+        currentPriceModal.textContent = formatPrice(modalState.stockPrice);
         profitLossModal.textContent = formatPrice(modalState.profitLoss);
+        stockSymbolModal.textContent = modalState.stockSymbol;
+        stockPriceModal.textContent = formatPrice(modalState.stockPrice);
         quantityInputModal.value = "";
         errorModal.textContent = "";
 
@@ -290,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    setInterval(fetchPortfolio, 1000);
+    setInterval(fetchPortfolio, 3000);
 
     fetchPortfolio();
     fetchBalance();

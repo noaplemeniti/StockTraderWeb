@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
-  secret: "dev-secret-key",
+  secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
 }));
@@ -40,26 +40,26 @@ app.post("/api/register", async (req, res) => {
   const { username, email, password, confirmPassword } = req.body ?? {};
 
   if(!username || !email || !password || !confirmPassword) {
-    return res.status(400).json({ error: "Missing required fields." });
+    res.status(400).json({ error: "Missing required fields." });
   }
 
   if(password !== confirmPassword) {
-    return res.status(400).json({ error: "Passwords do not match." });
+    res.status(400).json({ error: "Passwords do not match." });
   }
 
   if(!userRepository.validateEmailFormat(email)) {
-    return res.status(400).json({ error: "Invalid email format." });
+    res.status(400).json({ error: "Invalid email format." });
   }
 
   try{
     const existingUser = await userRepository.getUserByUsername(username);
     if(existingUser) {
-      return res.status(409).json({ error: "Username already taken." });
+      res.status(409).json({ error: "Username already taken." });
     }
 
     const existingEmail = await userRepository.getUserByEmail(email);
     if(existingEmail) {
-      return res.status(409).json({ error: "Email already registered." });
+      res.status(409).json({ error: "Email already in use." });
     }
     const passwordHash = await hashPassword(password);
     await userRepository.createUser(username, email, passwordHash);
@@ -67,9 +67,8 @@ app.post("/api/register", async (req, res) => {
   }
   catch(err) {
     console.error(err);
-    return res.status(500).json({ error: "Failed to register user." });
+    throw new Error(err?.message || "Server failiure.");
   }
-
 });
 
 app.post("/api/login", async (req, res) => {
@@ -360,24 +359,24 @@ app.post("/api/user/addFunds", async (req, res) => {
   }
 });
 
-let updating = false;
-
-setInterval(async () => {
-  const stocks = await stockRepository.getAllStocks();
-
-  for (const stock of stocks) {
-    const shock = normalRandom();
-    let newPrice =
-      stock.current_price * Math.exp(stock.volatility * shock);
-
-    newPrice = Math.max(0.01, newPrice);
-    await stockRepository.updateStockPrice(stock.id, newPrice);
+async function tick(){
+  try {
+    const stocks = await stockRepository.getAllStocks();
+    
+    for(const stock of stocks){
+      let newPrice = stock.current_price * Math.exp(0.05 * stock.volatility * normalRandom());
+      newPrice = Math.max(0.01, newPrice);
+      await stockRepository.updateStockPrice(stock.id, newPrice);
+    }
+  } catch(err) {
+    console.error(err);
+  } finally{
+    console.log("updated prices");
+    setTimeout(tick, 5000);
   }
+}
 
-  console.log("Prices updated.");
-}, 5000);
-
-
+tick();
 
 function normalRandom() {
   let u = 0, v = 0;
