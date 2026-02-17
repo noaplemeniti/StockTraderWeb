@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const balanceData = await userBalance();
             const profitLossData = await profitLoss();
-            displayBalance.textContent = balanceData.balance;
+            displayBalance.textContent = balanceData.balance.toFixed(2);
 
             const totalValueData = await portfolioValue();
             const profitLossValue = profitLossData.profitLoss;
